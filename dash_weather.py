@@ -127,7 +127,7 @@ dropdown = dcc.Dropdown(['Glasgow', 'Stornoway', 'Portree '],
                                "color": "#222222"})
 #we added the styling to the dropdown menu
 
-app.layout = html.Div(children=[html.H1('Temperature Analysis (Apr 2023 to Apr 2024) for 3 Selected Locations in Scotland: Glasgow, Stornoway, Portree', style={'textAlign': 'center', 'color': '#636EFA'}), 
+app.layout = html.Div(children=[html.H1("Huseyin's First Dash, Temperature Analysis (Apr 2023 to Apr 2024) for 3 Selected Locations in Scotland: Glasgow, Stornoway, Portree", style={'textAlign': 'center', 'color': '#636EFA'}), 
                         html.Div(children=html.P("Selected Locations View"), 
                                 style={'backgroundColor': '#636EFA', 'color': 'white', 
                                                  'width': '900px', 'marginLeft': 'auto', 'marginRight': 'auto', 'textAlign': 'center', 'marginBottom': '20px'}),

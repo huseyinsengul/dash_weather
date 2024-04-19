@@ -1,0 +1,9 @@
+dash==2.16.2
+gunicorn
+plotly==5.9
+dash-tools
+pandas==2.2.1
+dash_bootstrap_components
+sqlalchemy==2.0.29
+python-dotenv
+#psycog2==2.9.9

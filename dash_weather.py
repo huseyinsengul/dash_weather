@@ -118,7 +118,7 @@ fig_windy = px.line(wind_wind, x='month_of_year', y='max_wind_kph', title='Max W
 fig_windy = fig_windy.update_layout(
         plot_bgcolor="#222222", paper_bgcolor="#222222", font_color="white", geo_bgcolor="#222222"
     )
-graph_windy = dcc.Graph(figure=fig4)
+graph_windy = dcc.Graph(figure=fig_windy)
 
 #the app
 

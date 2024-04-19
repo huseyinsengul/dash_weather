@@ -40,6 +40,10 @@ mask1 = ['city','avg_temp_c','max_temp_c','min_temp_c','date']
 mask_weather_condition = ['city', 'month_of_year', 'sunny_days', 'rainy_days', 'mystical_days', 'snow_days', 'cloudy_days', 'stay_at_home_days']
 weather_condition = df2[mask_weather_condition]
 df_mask1 = df[mask1]
+wind = ['city', 'month_of_year', 'max_wind_kph']
+wind_df = df[wind]
+wind_wind = wind_df.groupby(['month_of_year', 'city']).mean().reset_index()
+wind_wind = pd.DataFrame(wind_wind)
 graph = dcc.Graph()
 cities =df_mask1['city'].unique().tolist() 
 image_path1 = 'assets/stornoway_image_small.jpg'
@@ -110,6 +114,12 @@ fig4 = fig4.update_layout(
     )
 graph4 = dcc.Graph(figure=fig4)
 
+fig_windy = px.line(wind_wind, x='month_of_year', y='max_wind_kph', title='Max Wind km/h per City', markers=True, color='city')
+fig_windy = fig_windy.update_layout(
+        plot_bgcolor="#222222", paper_bgcolor="#222222", font_color="white", geo_bgcolor="#222222"
+    )
+graph_windy = dcc.Graph(figure=fig4)
+
 #the app
 
 app =dash.Dash(external_stylesheets=[dbc.themes.DARKLY])
@@ -127,7 +137,13 @@ dropdown = dcc.Dropdown(['Glasgow', 'Stornoway', 'Portree '],
                                "color": "#222222"})
 #we added the styling to the dropdown menu
 
-app.layout = html.Div(children=[html.H1("Huseyin's First Dash, Temperature Analysis (Apr 2023 to Apr 2024) for 3 Selected Locations in Scotland: Glasgow, Stornoway, Portree", style={'textAlign': 'center', 'color': '#636EFA'}), 
+app.layout = html.Div(children=[html.H1("Huseyin's First Dash, Weather Conditions Analysis (Apr 2023 to Apr 2024) for 3 Selected Locations in Scotland: Glasgow, Stornoway, Portree", 
+                                style={'textAlign': 'center', 'color': '#636EFA'}), 
+
+                        html.Div(children=html.P("What is the goal? Investigating 3 parts of Scotland based on the following: More sunny days, Less rainy days, Low wind km/h, Higher avg tempratures per week, month, per season, and especially during summer period"), 
+                                style={'textAlign': 'center', 'color': '#636EFA',
+                                       'marginLeft': 'auto', 'marginRight': 'auto', 'marginBottom': '20px'}),
+                        
                         html.Div(children=html.P("Selected Locations View"), 
                                 style={'backgroundColor': '#636EFA', 'color': 'white', 
                                                  'width': '900px', 'marginLeft': 'auto', 'marginRight': 'auto', 'textAlign': 'center', 'marginBottom': '20px'}),
@@ -159,15 +175,26 @@ app.layout = html.Div(children=[html.H1("Huseyin's First Dash, Temperature Analy
                                                  'width': '900px', 'marginLeft': 'auto', 'marginRight': 'auto', 'textAlign': 'center', 'marginBottom': '20px'}),
                                 graph_sunny, graph_rainy,
 
-                        html.Div(children=html.P("Bar Plot View"), 
+                        html.Div(children=html.P("Temperature - Bar Plot View"), 
                                 style={'backgroundColor': '#636EFA', 'color': 'white', 
                                                  'width': '900px', 'marginLeft': 'auto', 'marginRight': 'auto', 'textAlign': 'center', 'marginBottom': '20px'}),
                                 graph1,
 
-                        html.Div(children=[html.Div('Line Plot View', 
+                        html.Div(children=[html.Div('Temperature - Line Plot View', 
                                           style={'backgroundColor': '#636EFA', 'color': 'white','width': '33%',
                                                  'marginLeft': 'auto', 'marginRight': 'auto', 'textAlign': 'center', 'marginBottom': '20px'}),   
-                                dropdown, graph2, graph3, graph4])
+                                dropdown, graph2, graph3, graph4]),
+
+                        html.Div(children=html.P("Wind Comparison"), 
+                                style={'backgroundColor': '#636EFA', 'color': 'white', 
+                                                 'width': '900px', 'marginLeft': 'auto', 'marginRight': 'auto', 'textAlign': 'center', 'marginBottom': '20px'}),
+                                graph_windy,
+
+                        html.Div(children=html.P("Result: Maybe I should reconsider my off grid plan locations?"), 
+                                style={'textAlign': 'center', 'color': '#636EFA',
+                                       'marginLeft': 'auto', 'marginRight': 'auto', 'marginBottom': '20px'}),
+
+
 ])
 
 @callback(
